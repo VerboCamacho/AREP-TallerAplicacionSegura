@@ -1,6 +1,6 @@
 package edu.escuelaing.arep.app;
 
-import static spark.Spark.get;
+import static spark.Spark.*;
 
 
 /**
@@ -10,8 +10,9 @@ import static spark.Spark.get;
 public class App 
 {
     public static void main(String[] args){
-
-        get("/helloservice",(req,res)->"Hello From Service");
+        secure("keysCerts/ecikeystore.p12", "123456", null, null);
+        port(getPort());
+        get("/helloSecureService",(req,res)->"Hello From Service");
         
     }
 
@@ -24,6 +25,6 @@ public class App
         if (System.getenv("PORT") != null) {
             return Integer.parseInt(System.getenv("PORT"));
         }
-        return 4567;
+        return 5000;
     }
 }
